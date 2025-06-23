@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basit Hesap Makinesi</title>
+</head>
+<body>
+
+<h2>Toplama Hesap Makinesi</h2>
+
+<input type="number" id="sayi1" placeholder="Birinci sayı">
+<input type="number" id="sayi2" placeholder="İkinci sayı">
+
+
+
+<button onclick="topla()">Topla</button>
+
+<button onclick="fark()">Fark</button>
+
+<p>Sonuç1: <span id="sonuc1">0</span></p>
+<p>Sonuç2: <span id="sonuc2">0</span></p>
+
+<script>
+  function topla() {
+    let sayi1 = Number(document.getElementById('sayi1').value);
+    let sayi2 = Number(document.getElementById('sayi2').value);
+    let toplam = sayi1 + sayi2;
+    document.getElementById('sonuc1').innerText = toplam;
+  }
+      function fark() {
+    let sayi1 = Number(document.getElementById('sayi1').value);
+    let sayi2 = Number(document.getElementById('sayi2').value);
+    let fark = sayi1 - sayi2 ;
+      document.getElementById('sonuc2').innerText = fark;
+    }
+    
+  
+  
+</script>
+
+</body>
+</html>
