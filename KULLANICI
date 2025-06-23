@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kullanıcı Paneli</title>
+</head>
+<body>
+
+<h2>Kullanıcı Bilgisi Girişi</h2>
+
+<!-- Konum girişleri -->
+<p>Konumunuz:</p>
+<label for="konumX1">X1 Konumu:</label>
+<input type="number" id="konumX1" ><br>
+
+<label for="konumY1">Y1 Konumu:</label>
+<input type="number" id="konumY1" ><br>
+
+<p>Gitmek istediğiniz konum:</p>
+<label for="konumX2">X2 Konumu:</label>
+<input type="number" id="konumX2" ><br>
+<label for="konumY2">Y2 Konumu:</label>
+<input type="number" id="konumY2" ><br>
+
+<!-- Kaydet butonu -->
+<button onclick="bilgileriKaydet()">Bilgileri Kaydet</button>
+
+<!-- Bilgileri göster -->
+<h3>Girilen Bilgiler:</h3>
+<p id="sonuc">Henüz bilgi girilmedi.</p>
+
+<script>
+  function bilgileriKaydet() {
+    let x1 = Number(document.getElementById("konumX1").value);
+    let y1 = Number(document.getElementById("konumY1").value);
+    let x2 = Number(document.getElementById("konumX2").value);
+    let y2 = Number(document.getElementById("konumY2").value);
+    
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    const mesafe = Math.sqrt(dx * dx + dy * dy);
+
+    document.getElementById("sonuc").innerText =
+      `Başlangıç: (${x1}, ${y1})\nHedef: (${x2}, ${y2})\nMesafe: ${mesafe.toFixed(2)} birim`;
+  }
+</script>
+
+</body>
+</html>
