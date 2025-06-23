@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Basit Yolcu-Sürücü Eşleştirme</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    input { margin: 5px; width: 80px; }
+    button { margin: 10px 0; }
+    .surucu { margin: 5px 0; }
+  </style>
+</head>
+<body>
+
+<h2>Yolcu-Sürücü Eşleştirme</h2>
+
+<h3>Yolcu Konumu</h3>
+X: <input type="number" id="yolcuX" value="3">
+Y: <input type="number" id="yolcuY" value="3">
+
+<h3>Sürücüler</h3>
+<div id="surucuListesi"></div>
+
+<button onclick="yeniSurucuEkle()">Yeni Sürücü Ekle</button><br>
+
+<button onclick="surucuBul()">En Yakın Müsait Sürücüyü Bul</button>
+
+<h3>Sonuç:</h3>
+<p id="sonuc">Henüz arama yapılmadı.</p>
+
+<script>
+  // Başlangıçta 3 sürücü olsun
+  const suruculer = [
+    { id: 1, konum: { x: 5, y: 5 }, bos: true },
+    { id: 2, konum: { x: 10, y: 10 }, bos: false },
+    { id: 3, konum: { x: 1, y: 1 }, bos: true },
+  ];
+
+  let surucuIdSayac = 4; // Yeni sürücüler için id sayacı
+
+  function surucuListesiniGoster() {
+    const div = document.getElementById('surucuListesi');
+    div.innerHTML = '';
+    suruculer.forEach(surucu => {
+      const surucuDiv = document.createElement('div');
+      surucuDiv.className = 'surucu';
+      surucuDiv.innerHTML = 
+        `ID: ${surucu.id} - Konum: (${surucu.konum.x}, ${surucu.konum.y}) - ` +
+        `Boş mu? <input type="checkbox" ${surucu.bos ? 'checked' : ''} onchange="surucuDurumuDegistir(${surucu.id}, this.checked)">`;
+      div.appendChild(surucuDiv);
+    });
+  }
+
+  function surucuDurumuDegistir(id, bosMu) {
+    const surucu = suruculer.find(s => s.id === id);
+    if (surucu) {
+      surucu.bos = bosMu;
+    }
+  }
+
+  function yeniSurucuEkle() {
+    // Rastgele konum 0-15 arası
+    const yeniSurucu = {
+      id: surucuIdSayac++,
+      konum: { x: Math.floor(Math.random() * 16), y: Math.floor(Math.random() * 16) },
+      bos: true
+    };
+    suruculer.push(yeniSurucu);
+    surucuListesiniGoster();
+  }
+
+  function mesafeHesapla(konum1, konum2) {
+    return Math.sqrt(
+      Math.pow(konum1.x - konum2.x, 2) + Math.pow(konum1.y - konum2.y, 2)
+    );
+  }
+
+  function surucuBul() {
+    const yolcuX = Number(document.getElementById('yolcuX').value);
+    const yolcuY = Number(document.getElementById('yolcuY').value);
+    const yolcuKonum = { x: yolcuX, y: yolcuY };
+
+    let enYakinSurucu = null;
+    let enKucukMesafe = Infinity;
+
+    suruculer.forEach(surucu => {
+      if (surucu.bos) {
+        const mesafe = mesafeHesapla(yolcuKonum, surucu.konum);
+        if (mesafe < enKucukMesafe) {
+          enKucukMesafe = mesafe;
+          enYakinSurucu = surucu;
+        }
+      }
+    });
+
+    const sonucP = document.getElementById('sonuc');
+    if (enYakinSurucu) {
+      sonucP.innerText = `En yakın müsait sürücü ID: ${enYakinSurucu.id}, Konum: (${enYakinSurucu.konum.x}, ${enYakinSurucu.konum.y}), Mesafe: ${enKucukMesafe.toFixed(2)}`;
+    } else {
+      sonucP.innerText = "Müsait sürücü bulunamadı.";
+    }
+  }
+
+  // Sayfa yüklendiğinde sürücüleri göster
+  surucuListesiniGoster();
+</script>
+
+</body>
+</html>
