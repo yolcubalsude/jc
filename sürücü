@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sürücü Paneli</title>
+</head>
+<body>
+
+<h2>Sürücü Bilgisi Girişi</h2>
+
+<!-- Konum girişleri -->
+<label>X Konumu: </label>
+<input type="number" id="konumX" ><br>
+
+<label>Y Konumu: </label>
+<input type="number" id="konumY" ><br>
+
+<!-- Müsaitlik durumu -->
+<label>Müsait misiniz? </label>
+<input type="checkbox" id="musait"><br><br>
+
+<!-- Kaydet butonu -->
+<button onclick="bilgileriKaydet()">Bilgileri Kaydet</button>
+
+<!-- Bilgileri göster -->
+<h3>Girilen Bilgiler:</h3>
+<p id="sonuc">Henüz bilgi girilmedi.</p>
+
+<script>
+  function bilgileriKaydet() {
+    let x = document.getElementById("konumX").value;
+    let y = document.getElementById("konumY").value;
+    let musait = document.getElementById("musait").checked;
+
+    // Bilgileri yazdır
+    document.getElementById("sonuc").innerText =
+      `Sürücü Konumu: (${x}, ${y})\nMüsaitlik: ${musait ? "Evet" : "Hayır"}`;
+  }
+</script>
+
+</body>
